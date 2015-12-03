@@ -1,0 +1,30 @@
+
+
+<div class="col-sm-4">
+	
+	
+		<div style="background-color: white;">
+			<form name="Loginform"
+				class="form  form-horizontal ng-dirty ng-valid ng-valid-required">
+				<h3 style="text-align: center; color: #222222;">Login</h3>
+				<br>
+				<p class="ng-hide" ng-show="loggedin == true" style="color: red;">
+					Invalid Username or Password</p>
+			<label style="color: purple; padding: 6px;">User Name:</label> <input
+					type="text" name="UserName"
+					class="form-control input-sm ng-pristine ng-invalid ng-invalid-required ng-valid-pattern"
+					style="color: black;" ng-model="Login.UserName"
+					placeholder="ex.john@mail.com" required=""> <label style="color: purple; padding: 6px;">Password:</label> <input
+					type="password" name="Password"
+					class="form-control input-sm ng-pristine ng-invalid ng-invalid-required ng-valid-pattern"
+					style="color: black;" ng-model="Login.Password"
+					placeholder="*************" required=""><span
+					style="margin:169px; padding:5px;top-margin:6px"><br> <span
+					style="margin: 169px;bottom-margin:5px;"><button type="button"
+						class="btn btn-danger btn-sm" ng-click="Login()"
+						ng-disabled="Loginform.$invalid">Login</button> </span>
+			</form>
+		</div>
+	</div>
+
+

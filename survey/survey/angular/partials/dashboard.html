@@ -1,0 +1,27 @@
+<div calss="row">
+<h1 style="color:white;text-align:center;" >CRUD Table</h1>
+<div class="col-sm-2"></div>
+<div class="col-sm-8">
+<table class="table" style="color:white;">
+    <thead>
+      <tr>
+      <th class="ng-hide"></th>
+        <th>Firstname</th>
+        <th>Lastname</th>
+        <th>Mobile</th>
+             <th>User Name</th>
+             <th style="margin-right:5px">CRUD</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="employee in employees">
+      <td class="ng-hide">{{employee.id}}</td>
+        <td>{{employee.firstname}}</td>
+        <td>{{employee.lastname}}</td>
+        <td>{{employee.mobile}}</td>
+        <td>{{employee.username}}</td>
+        <td><span class="pull-right"><button>Create</button><button>update</button><button>edit</button><button ng-click="delete()">delete</button></span></td>
+      </tr>
+      </tbody></table>
+</div>
+</div>

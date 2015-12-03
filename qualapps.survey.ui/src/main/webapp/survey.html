@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Surveysss</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="w3.css">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<script src="jquery.min.js"></script>
+<script src="bootstrap.min.js"></script>
+<script src="angular.min.js"></script>
+
+</head>
+
+<body ng-app="surveymodule" ng-controller="surveycontroller"
+	class="ng-cloak">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Surveysss</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#">Dashboard</a></li>
+					<li><a href="#">Settings</a></li>
+					<li><a href="#">Profile</a></li>
+					<li><a href="#">Help</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<br>
+	<br>
+	<br>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-3 sidebar">
+				<h3 class="page-header"><span>Surveys</span>
+				<span><a href="#" class="btn btn-sm btn-primary pull-right" ng-click="addSurvey();">Add</a></span>
+				</h3>
+				<ul class="list-group" ng-repeat="survey in surveys">
+					<li class="list-group-item"><a href="#"
+						ng-click="edit(survey)">{{survey.name}}</a></li>
+				</ul>
+			</div>
+
+			<div class="col-sm-9">
+				<form name="surveyform"
+					class="form  form-horizontal ng-dirty ng-valid ng-valid-required">
+					<div>
+						<h3 class="page-header">
+							<span>Survey</span> <span class="pull-right"><button
+									type="submit" class="btn btn-danger btn-md"
+									ng-click="delete(survey)" ng-disabled="surveyform.$invalid" ng-show="survey.id">Delete</button>
+								<button type="submit" class="btn btn-info btn-md"
+									ng-click="update(survey)" ng-disabled="surveyform.$invalid"  ng-show="survey.id">Update</button>
+								<button type="submit" class="btn btn-success btn-md"
+									 ng-click="save()"  ng-show="!survey.id">Save</button></span><!-- ng-disabled="surveyform.$invalid" -->
+						</h3>
+					</div>
+					<div>
+						<input type="hidden" ng-model="survey.id">
+						<div class="form-group">
+							<label class=" col-sm-1 control-label">Name</label>
+							<div class="col-sm-5">
+								<input type="text" name="name" ng-model="survey.name"
+									class="form-control input-md ng-pristine ng-invalid ng-invalid-required ng-valid-pattern"
+									placeholder="Enter survey name" required=""
+									ng-pattern="/^[a-zA-Z0-9]+$/">
+							</div>
+							<div class="col-sm-2">
+								<span><button id="add-question" type="button"
+										class="btn btn-info btn-sm" ng-click="addQuestions();"
+										ng-click="$index">Add Question</button></span>
+							</div>
+						</div>
+						</div>
+					
+					<div ng-controller="datecontroller">	
+					
+					
+						<div class="row">
+        <label class=" col-sm-1 control-label">Start :</label><span><div class="col-sm-5">
+            <p class="input-group">
+              <input type="date" class="form-control" datepicker-popup="{{format}}" ng-model="date" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </p>
+        </div>
+        <label class=" col-sm-1 control-label">End :</label><span><div class="col-sm-5">
+            <p class="input-group">
+              <input type="date" class="form-control" datepicker-popup="{{format}}" ng-model="date" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </p>
+        </div>
+			
+			  <label class=" col-sm-1 control-label">Format:</label><span><div class="col-sm-5"><select class="form-control col-sm-5" ng-model="format" ng-options="f for f in formats"><option></option></div></span></select>
+				</div>
+		<br><br><br>
+		<br><br>
+						<div class="panel-group" ng-repeat="question in survey.questions"
+							id="accordion">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion"
+											href="#collapseOne"><b>Question : #{{$index+1}} </b> </a> <span
+											class="pull-right">
+											<button type="button" class="close" 
+												aria-label="Close" ng-click="deletequestion(question);"
+												ng-click="$index">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</span>
+									</h4>
+								</div>
+								<div id="collapseOne" class="panel-collapse collapse in">
+									<div class="panel-body">
+										<b>Question</b><br>
+										<textarea ng-model="question.question" rows="3"
+											class="form-control input-md ng-pristine ng-invalid ng-invalid-required"
+											required="">
+										</textarea>
+<BR/>
+										<span class="pull-right"><button id="moreanswers" type="button"
+												ng-click="addAnswers(question);" ng-click="$index"
+												class="btn btn-info btn-sm">Add Answers</button></span>
+												<BR/>
+
+										<div ng-repeat="answer in question.answers">
+										<BR/>
+											<div class="form-group">
+												<label class=" col-sm-2 control-label">Answer
+													#{{$index+1}}</label>
+												<div class="col-sm-6">
+												<span class="pull-right">&nbsp;&nbsp;
+													<button type="button" class="close" aria-label="Close"
+														ng-click="deleteanswer(question,answers,answer);"
+														ng-click="$index">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</span>
+
+													<textarea name="answer" ng-model="answer.answer" rows="3"
+														class="form-control input-md ng-pristine ng-invalid ng-invalid-required "
+														placeholder="Enter Answer" required=""></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+				</form>
+			</div>
+
+		</div>
+	</div>
+<script src="js/js/survey.js"></script>
+<script src="js/js/datecontrol.js"></script>
+</body>
+</html>

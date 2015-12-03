@@ -1,0 +1,25 @@
+<div class="col-sm-4">
+	<div style="background-color: white; height: 460px">
+		<h1 style="text-align: center; color: purple;">Sign Up</h1><br>
+		<form name="Signupform" class="form  form-horizontal ng-dirty ng-valid ng-valid-required">
+		
+			<label style="color: purple; padding: 6px;">First Name:</label> 
+			<input type="text" name="Firstname" class="form-control input-sm ng-pristine ng-invalid ng-invalid-required ng-valid-pattern" style="color: black;" ng-model="signup.FirstName" placeholder="Please enter your first name" required="true">
+			
+			<label style="color: purple; padding: 6px;">Last Name:</label> 
+			<input type="text" name="Lastname" class="form-control input-sm ng-pristine ng-invalid ng-invalid-required ng-valid-pattern" style="color: black;" ng-model="signup.LastName" placeholder="Please enter your last name" required="">
+			
+			<label style="color: purple; padding: 6px;">Mobile Number:</label>
+			<input type="text" name="MobileNumber" class="form-control input-sm ng-pristine ng-invalid ng-invalid-required ng-valid-pattern" style="color: black;" ng-model="signup.Mobile" placeholder="Please enter your Mobile Number" required="">
+			
+			<label style="color: purple; padding: 6px;">User Name:</label> 
+			<input type="text" name="Username" class="form-control input-sm ng-pristine ng-invalid ng-invalid-required ng-valid-pattern" style="color: black;" ng-model="signup.UserName" placeholder="Ex.john@gmail.com" required=""> 
+			
+			<label style="color: purple; padding: 6px;">Password:</label> 
+			<input type="password" name="Password" class="form-control input-sm ng-pristine ng-invalid ng-invalid-required ng-valid-pattern" style="color: black;" ng-model="signup.Password" placeholder="***************" required=""><br>
+			
+			<span style="margin: 135px"><button type="button" class="btn btn-success btn-sm" ng-click="sign(signup)" ng-disabled="Signupform.$invalid">Sign Up</button>
+			<button type="button" class="btn btn-danger btn-sm" ng-click="cancel();">cancel</button> </span>
+		</form>
+	</div>
+</div>

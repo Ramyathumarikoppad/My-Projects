@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>ADD SURVEY </title>
+   <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="w3.css">
+    <link   href="css/bootstrap.min.css" rel="stylesheet" >
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/angular.min.js"></script>
+</head>
+ 
+<body ng-app="surveymodule" ng-controller="surveycontroller" class="ng-cloak">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Survey Name</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Help</a></li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+          </form>
+        </div>
+      </div>
+    </nav><br><br><br>
+
+<div class="container-fluid">
+<div class="row">   
+	<div class="col-sm-3 sidebar">
+		<h4 style="background-color: #b0c4de; text-align:center; padding-top: 25px; padding-bottom: 25px;">LIST OF SURVEYS</h4>
+		<a href="#" ng-click="addSurvey()" class="btn btn-sm">Add Survey</a>
+         <ul class="list-group" ng-repeat="survey in surveys" >
+    		<li class="list-group-item"><a href="#" ng-click="edit(survey)">{{survey.name}}</a></li>
+   		</ul>
+	</div>
+
+	<div class="col-sm-9">
+		<div>
+			<h1 class="page-header">Add Survey</h1>
+			<span><button class="btn btn-danger btn-lg navbar-right " ng-click="delete(survey)" style="margin-right: 30px;">Delete</button>
+		<button class="btn btn-info btn-lg navbar-right " ng-click="update(survey)" style="margin-right: 30px;">update</button>
+		<button class="btn btn-success btn-lg navbar-right " style="margin-right: 40px;" ng-click="save()">Save</button></span>
+		</div>
+		<div style="margin-left:5%">
+		
+			<form namr="surveyform" class="control-form ">
+				<div style="visibility:hidden" ><b>ID:</b><input type="text" ng-model="survey.id"></div>
+				<b>NAME:</b><input type="text" placeholder="Name"  name="name" ng-model="survey.name"  ng-minlength=3 ng-maxlength=20 required>
+				<div class="error" ng-show="survey.name.$dirty && survey.name.$invalid">
+        			<small class="error" ng-show="survey.name.$error.required"> Your name is required.</small>
+        		</div>
+
+        		
+        		<button id="add-question" type="button" class="btn btn-info btn-sm" ng-click="addQuestions();" ng-click = "$index"> Question and Answers</button>
+        		<span style="color:red" ng-show="name.$dirty && name.$invalid"></span>
+
+
+ <div class="panel-group" ng-repeat="question in survey.questions" id="accordion" >
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+            <h>Question&#09#{{$index+1}} : </h>
+                   </a>
+        </h4>
+      </div>
+      <div id="collapseOne" class="panel-collapse collapse in">
+        <div class="panel-body">
+        <b>Question &#09#{{$index+1}}:</b><br>
+        <textarea ng-model="question.question" cols="70" rows="3" style="border:5px single #121212;"></textarea>
+        
+        <span><button id="moreanswers" type="button" ng-click="addAnswers(question);" ng-click = "$index" class="btn btn-info btn-sm">Answers</button>&#09<button id="deletequestion" type="button" ng-click="deletequestion(question);" ng-click = "$index" class="btn btn-danger btn-sm">Delete Question</button></span><hr><br>
+
+
+<div ng-repeat="answer in question.answers">
+<b>Answer &#09#{{$index+1}}:</b><br>
+<textarea  ng-model="answer.answer" cols="70" rows="3" style="border:5px single #121212;">
+</textarea>&#09<span><button id="deleteanswer" type="button" ng-click="deleteanswer(question,answers,answer);" ng-click = "$index" class="btn btn-danger btn-sm">Delete Answer</button></span>
+</div>
+        	</form><br>        
+        </div>
+      </div>
+    </div>
+</div>
+
+   
+    </div>
+   </div>
+  
+  </div>
+</div>
+<script>
+var app = angular.module('surveymodule', []);
+app.controller('surveycontroller', function($scope){
+var emptySurvey = {id:'',name: '',questions:[]};
+$scope.survey = emptySurvey;
+$scope.surveys = [];
+
+$scope.save = function () {
+	console.log(JSON.stringify($scope.survey));
+	$scope.surveys.push($scope.survey);
+	//$scope.survey.$setPristine();
+	$scope.survey = {id:'',name: '',questions:[]};
+}
+
+$scope.addAnswers = function (question) {
+		var answer = {};
+		question.answers.push(answer);
+		console.log(JSON.stringify(question));
+}
+
+$scope.edit = function(survey){
+	$scope.survey = survey;
+}	
+
+$scope.update = function(survey){
+	$scope.survey = {id:survey.id,name:survey.name,questions:survey.questions};
+}
+
+
+$scope.addSurvey = function() {
+	//$scope.survey.$setPristine();
+	$scope.surveys = $scope.survey;
+	
+}
+
+$scope.addQuestions = function(){
+	var question = {question:'',answers:[]};
+	$scope.survey.questions.push(question);
+}
+
+$scope.delete = function (survey) {
+     $scope.surveys.splice(survey,1);
+}
+
+$scope.deletequestion = function (question) {
+	 console.log(JSON.stringify($scope.survey));
+   var item = $scope.survey.questions.splice(question,1);
+    console.log(JSON.stringify(item));
+}
+
+$scope.deleteanswer = function (question,answers,answer) {
+	 console.log(JSON.stringify($scope.survey));
+  var item = $scope.survey.questions.splice(answer,1);
+   console.log(JSON.stringify(item));
+}
+});
+          
+</script>
+
+</body>
+</html>

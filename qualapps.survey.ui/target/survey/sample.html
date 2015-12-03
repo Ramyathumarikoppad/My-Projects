@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>ADD SURVEY </title>
+   <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="w3.css">
+    <link   href="css/bootstrap.min.css" rel="stylesheet" >
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/angular.min.js"></script>
+  
+</head>
+ 
+<body ng-app="surveymodule" ng-controller="surveycontroller">
+
+<div class="container-fluid">
+
+<div><header class="w3-container purple-l3">
+  <h1 style="text-align:center">ADD SURVEYS</h1><hr>
+</header></div><br>
+
+
+  
+  <div><b>ID:</b><input type="text" ng-model="id"><br><hr>
+<b>NAME:</b><input type="text" ng-model="name"><hr>
+<button id="add-question" type="button" class="btn btn-info btn-sm">ADD QUESTION & Answer</button><br><br><br></div>
+
+<div id="question"> 
+<b>QUESTIONS:</b><input type="text" ng-model="question"> <br><br>
+<div id="answers"><b>Answer:</b><textarea  ng-model="answer" cols="50" rows="3" style="border:5px single #121212;">
+Answer for the above question..
+</textarea><span><button id="moreanswers" type="button" class="btn btn-info btn-sm">Have another Answer?</button></span></div>
+<p1></p1>
+<input type="button" ng-click="buttonclick()" value="Save"></div><br>
+   
+   
+   <div>
+    <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>question</th>
+        <th>Answer</th>
+      </tr>
+    </thead>
+    <tbody ng-repeat="user in users">
+            <tr>
+                
+                <td ng-bind="user.arr_id"></td>
+                <td ng-bind="user.arr_name"></td>
+                <td ng-bind="user.arr_question"></td>
+                <td ng-bind="user.arr_answer"></td>
+                <td><a class="btn btn-info btn-lg"
+                ng-click="edit(user,users.indexOf(user))" ><span class="glyphicon glyphicon-pencil">EDIT</span>  
+        </a>
+              <a class="btn btn-danger btn-lg"
+                ng-click="delete(users.indexOf(user))" ><span class="glyphicon glyphicon-remove">DELETE</span></td>
+            </tr>
+        </tbody>
+  </table>
+  </div>
+    
+   
+    </div>
+    
+<script>
+var app = angular.module('surveymodule', []);
+app.controller('surveycontroller', function($scope){
+$scope.users = [];
+$scope.buttonclick = function () {
+	
+                $scope.users.push({ 'arr_id': $scope.id, 
+                'arr_name': $scope.name,'arr_question' : $scope.question,'arr_answer' : $scope.answer });
+                $scope.id = '';
+                $scope.name = '';
+                $scope.question = '';
+                $scope.answer = ''; 
+}
+                        
+var key;
+	$scope.edit = function (user, index) {
+    key = index;                
+    $scope.id = user.arr_id;
+    $scope.name = user.arr_name;
+    $scope.question = user.arr_question;
+    $scope.answer = user.arr_answer;
+   
+};
+
+
+$scope.delete = function (id) {
+     $scope.users.splice(id,1);
+}
+});
+          
+</script>
+
+
+<script>
+$(document).ready(function(){
+    $("#add-question").click(function(){
+        $("#question").toggle();
+    });
+    
+    $("#moreanswers").click(function(){
+        $("#answers").clone().appendTo("p1");
+    });
+      
+});
+</script>
+
+<
+</body>
+</html>

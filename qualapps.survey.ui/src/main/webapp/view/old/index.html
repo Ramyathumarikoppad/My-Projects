@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+   
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/stylish-portfolio.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+     <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+	<script src="angular.min.js" ></script>
+	<script src="angular-route.js"></script>
+	<!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+	
+    
+     <script src="js/app.js"></script>
+    <script src="controller/LoginController.js"></script>
+   <script src="service/surveyList.js"></script>
+</head>
+
+<body ng-app="survey" >
+
+    <!-- Navigation -->
+    <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
+    <nav id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
+            <li class="sidebar-brand">
+                <a href="#top"  onclick = $("#menu-close").click(); >Start Survey</a>
+            </li> 
+            <li>
+                <a href="/survey/" >Home</a>
+            </li>
+            <li>
+                <a href="#about" onclick = $("#menu-close").click(); >About</a>
+            </li>
+           <li><a href="#" data-toggle="modal" data-target="#loginModal"> <i class="fa fa-sign-in"></i>
+											Login
+									</a></li>
+        </ul>
+    </nav>
+
+    <!-- Header -->
+    <header id="top" class="header">
+    <h1><u>Survey</u></h1>
+       <div ng-view></div>
+            
+            <br>
+        </div>
+    </header>
+  
+
+    <!-- About -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                </div>
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+    </section>
+    
+        <div class="modal fade login-madal" id="loginModal" tabindex="-1"
+		role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"  ng-controller = "LoginController" ng-hide="!loginForm"> 
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content panel panel-primary">
+				<div class="modal-header panel-heading">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="loginModalClose">&times;</button>
+					<h4 class="modal-title panel-title text-center" id="myModalLabel">User Login</h4>
+				</div>
+			<div class="modal-body panel-body">
+			<form role="form"  name="loginForm"  ng-submit="login(email,password)">
+	  	<div class="form-group">
+			    <label for="email">Email address:</label>
+			    <input type="email"  class="form-control" id="email" ng-model="email">
+			 	 </div>
+			  <div class="form-group">
+			    <label for="pwd">Password:</label>
+			    <input type="password" class="form-control" id="pwd" ng-model="password">
+			  </div>
+			  <div class="checkbox">
+			    <label><input type="checkbox"> Remember me</label>
+			  </div>
+			  <button type="submit" class="btn btn-default" >Submit</button>
+			</form>
+			</div>
+
+		</div>
+	</div>
+ </div> 
+ <div>{{surveyList}}</div>
+ 
+    </footer>
+
+    
+    <!-- Custom Theme JavaScript -->
+    <script>
+    // Closes the sidebar menu
+    $("#menu-close").click(function(e) {
+        e.preventDefault();
+        $("#sidebar-wrapper").toggleClass("active");
+    });
+
+    // Opens the sidebar menu
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#sidebar-wrapper").toggleClass("active");
+    });
+
+	
+    $('#loginModal').on('shown.bs.modal', function() {
+		$('#email').focus();
+	});
+    // Scrolls to the selected menu item on the page
+    $(function() {
+        $('a[href*=#]:not([href=#])').click(function() {
+            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
+
+                var target = $(this.hash);
+                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                if (target.length) {
+                    $('html,body').animate({
+                        scrollTop: target.offset().top
+                    }, 1000);
+                    return false;
+                }
+            }
+        });
+    });
+    </script>
+
+</body>
+
+</html>

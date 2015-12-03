@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<title>Insert title here</title>
+</head>
+<body>
+<div><h1>Survey List</h1></div>
+
+<div class="container">
+  
+  
+<!-- <table>
+	<tr>
+		<th>Name</th>
+		<th>Description</th>
+		<th>Start Date</th>
+		<th>End Date</th>  
+	</tr>
+	<tr ng-repeat = "subject in student.subjects">
+      <td>{{ subject.name }}</td>
+      <td>{{ subject.marks }}</td>
+   </tr>
+</table> -->
+<table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+     <tr ng-repeat = "survey in surveyList">
+      <td>{{survey.name}}</td>
+   </tr> 
+    </tbody>
+  </table>
+</div>
+<div><button type="button" class="btn btn-info">Create New Survey</button></div>
+</body>
+</html>

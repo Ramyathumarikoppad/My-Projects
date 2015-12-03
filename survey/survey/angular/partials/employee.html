@@ -1,0 +1,128 @@
+<div calss="row">
+	<div>
+		<h1 style="color: white; text-align: center; margin-left: 400px;"
+			ng-hide="emp == false">
+			Employees <span style="margin-left: 400px;"><button
+					type="button" class="btn btn-info btn-sm" ng-click="add()"
+					style="margin-right: 10px;">Add Employee</button> </span>
+		</h1>
+		<h3 style="color: white; text-align: center;" class="ng-hide"
+			ng-show="emp == false">Enter Details</h3>
+			
+		<div class="col-sm-2"></div>
+		<div class="col-sm-8">
+			<div ng-hide="emp == false">
+				<table class="table" style="color: white;">
+					<thead>
+						<tr>
+							<th class="ng-hide"></th>
+							<th>Firstname</th>
+							<th>Lastname</th>
+							<th>Mobile</th>
+							<th>User Name</th>
+							<th style="text-align: center;">CRUD</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="employee in employees">
+							<td class="ng-hide">{{employee.id}}</td>
+							<td>{{employee.firstname}}</td>
+							<td>{{employee.lastname}}</td>
+							<td>{{employee.mobile}}</td>
+							<td>{{employee.username}}</td>
+							<td><span>
+									<button type="button" class="btn btn-success btn-sm"
+										ng-click="update(employee)">update</button>
+									<button type="button" class="btn btn-danger btn-sm"
+										ng-click="delete(employee)">delete</button>
+							</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4"></div>
+		<div class="col-sm-4">
+			<div class="ng-hide" ng-show="up == true">
+				<div style="background-color: white; height: 370px">
+					<h2 style="text-align: center; color: purple;">UPDATE</h2>
+					<form name="updateform"
+						class="form  form-horizontal ng-dirty ng-valid ng-valid-required">
+
+						<label style="color: purple; padding: 6px;">First Name:</label> <input
+							type="text" name="Firstname"
+							class="form-control input-sm ng-pristine ng-invalid ng-invalid-required ng-valid-pattern"
+							style="color: black;" ng-model="employee.firstname"
+							placeholder="Please enter your first name" required="true">
+
+						<label style="color: purple; padding: 6px;">Last Name:</label> <input
+							type="text" name="Lastname"
+							class="form-control input-sm ng-pristine ng-invalid ng-invalid-required ng-valid-pattern"
+							style="color: black;" ng-model="employee.lastname"
+							placeholder="Please enter your last name" required=""> <label
+							style="color: purple; padding: 6px;">Mobile Number:</label> <input
+							type="text" name="MobileNumber"
+							class="form-control input-sm ng-pristine ng-invalid ng-invalid-required ng-valid-pattern"
+							style="color: black;" ng-model="employee.mobile"
+							placeholder="Please enter your Mobile Number" required="">
+
+						<label style="color: purple; padding: 6px;">User Name:</label> <input
+							type="text" name="Username"
+							class="form-control input-sm ng-pristine ng-invalid ng-invalid-required ng-valid-pattern"
+							style="color: black;" ng-model="employee.username"
+							placeholder="Ex.john@gmail.com" required=""> <br> <span
+							style="margin: 135px"><button type="button"
+								class="btn btn-success btn-sm" ng-click="updateit(employee)"
+								ng-disabled="updateform.$invalid">Update</button>
+							<button type="button" class="btn btn-danger btn-sm"
+								ng-click="cancel()">cancel</button> </span>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-4"></div>
+		<div class="col-sm-4">
+			<div class="ng-hide" ng-show="create == true">
+				<div style="background-color: white; height: 370px">
+					<h2 style="text-align: center; color: purple;">UPDATE</h2>
+					<form name="createform"
+						class="form  form-horizontal ng-dirty ng-valid ng-valid-required">
+
+						<label style="color: purple; padding: 6px;">First Name:</label> <input
+							type="text" name="Firstname"
+							class="form-control input-sm ng-pristine ng-invalid ng-invalid-required ng-valid-pattern"
+							style="color: black;" ng-model="creat.firstname"
+							placeholder="Please enter your first name" required="true">
+
+						<label style="color: purple; padding: 6px;">Last Name:</label> <input
+							type="text" name="Lastname"
+							class="form-control input-sm ng-pristine ng-invalid ng-invalid-required ng-valid-pattern"
+							style="color: black;" ng-model="creat.lastname"
+							placeholder="Please enter your last name" required=""> <label
+							style="color: purple; padding: 6px;">Mobile Number:</label> <input
+							type="text" name="MobileNumber"
+							class="form-control input-sm ng-pristine ng-invalid ng-invalid-required ng-valid-pattern"
+							style="color: black;" ng-model="creat.mobile"
+							placeholder="Please enter your Mobile Number" required="">
+
+						<label style="color: purple; padding: 6px;">User Name:</label> <input
+							type="text" name="Username"
+							class="form-control input-sm ng-pristine ng-invalid ng-invalid-required ng-valid-pattern"
+							style="color: black;" ng-model="creat.username"
+							placeholder="Ex.john@gmail.com" required=""> <br> <span
+							style="margin: 135px"><button type="button"
+								class="btn btn-success btn-sm" ng-click="save(creat)"
+								ng-disabled="createform.$invalid">Create</button>
+							<button type="button" class="btn btn-danger btn-sm"
+								ng-click="cancel( )">cancel</button> </span>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>

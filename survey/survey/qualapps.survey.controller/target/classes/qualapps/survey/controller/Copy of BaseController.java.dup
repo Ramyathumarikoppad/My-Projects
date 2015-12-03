@@ -1,0 +1,310 @@
+package qualapps.survey.controller;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import qualapps.survey.common.data.Survey;
+import qualapps.survey.common.vo.AnswerVO;
+import qualapps.survey.common.vo.QuestionTypeVO;
+import qualapps.survey.common.vo.QuestionVO;
+import qualapps.survey.common.vo.SurveyVO;
+import qualapps.survey.service.QuestionAnswerSerc;
+
+import com.google.gson.Gson;
+
+
+@Controller
+public class BaseController {
+
+	@Autowired
+	private QuestionAnswerSerc questionAservice;
+
+	@RequestMapping("/surveylist.htm")
+	public ModelAndView surveyList(HttpServletRequest req, HttpServletResponse res) {
+		System.out.println("in survey list");
+		ModelAndView model = new ModelAndView("surveylist");
+		JSONArray list = null;
+		// TODO send userId to get list of survey
+		String surveyId = "arg1";
+		try {
+
+			list = questionAservice.surveyList(surveyId);
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+		model.addObject("survey", list);
+		return model;
+	}
+
+	@RequestMapping("/getsurveylist.htm")
+	@ResponseBody
+	public List<Survey> getSurveyList() {
+
+		System.out.println("in survey list");
+		List<Survey> list = null;
+		String surveyId = "arg1";
+		try {
+			list = questionAservice.getSurveyList(surveyId);
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+		return list;
+	}
+	
+	@RequestMapping(value = "/surveycreate.htm", method = RequestMethod.POST, headers = { "Content-type=application/json" })
+	@ResponseBody
+	public SurveyVO addSurvey(@RequestBody SurveyVO s) {
+		System.out.println("in survey list  ");
+
+		SurveyVO s1 = s;
+		ModelAndView model = new ModelAndView("surveycreate");
+		try {
+
+			s1 = questionAservice.addSurvey(s1, "email");
+			return s1;
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+		model.addObject("survey", s1.getDesc());
+		return s1;
+	}
+
+	@RequestMapping("/surveyupdate.htm")
+	public ModelAndView updateSurvey(HttpServletRequest req, HttpServletResponse res) {
+		System.out.println("in survey list");
+		JSONObject obj = new JSONObject();
+		Gson gson = new Gson();
+		String surveyId = "arg2";
+		SurveyVO s = null;
+		ModelAndView model = new ModelAndView("surveycreate");
+		try {
+			obj.put("surveyId", "arg1325");
+			obj.put("name", "abc");
+			obj.put("desc", "Narendra Modi Survey");
+			obj.put("startDate", "08/01/2015");
+			obj.put("endDate", "08/05/2015");
+			obj.put("createdBy", "a");
+			obj.put("updatedBy", "ab");
+			s = gson.fromJson(obj.toString(), SurveyVO.class);
+			SurveyVO s1 = questionAservice.updateSurvey(s, surveyId);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+		model.addObject("survey", s.getDesc());
+		return model;
+	}
+
+	@RequestMapping("/surveydelete.htm")
+	public ModelAndView deleteSurvey(HttpServletRequest req, HttpServletResponse res) {
+		String surveyId = "arg1325";
+
+		ModelAndView model = new ModelAndView("surveycreate");
+		try {
+			int s1 = questionAservice.deleteSurvey(surveyId);
+			System.out.println(" Out of Exception, coming back from ADD @@@@@@@@@@@@@@@@@@@ in update");
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+		return model;
+	}
+
+	@RequestMapping("/addquestion.htm")
+	public @ResponseBody
+	QuestionVO addQuestion() {
+		JSONObject obj = new JSONObject();
+		Gson gson = new Gson();
+		String surveyId = "arg1";
+		QuestionVO q = null;
+		ModelAndView model = new ModelAndView("surveycreate");
+		try {
+			obj.put("questionId", "3624");
+			obj.put("surveyId", "arg1");
+			obj.put("questionTypeId", "111");
+			obj.put("question", "how are you?");
+			obj.put("createdDate", "08/05/2015");
+			obj.put("updatedDate", "08/10/2015");
+			q = gson.fromJson(obj.toString(), QuestionVO.class);
+			QuestionVO s1 = questionAservice.addQuestion(q, surveyId);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+		model.addObject("question", q.getQuestion());
+		return q;
+	}
+
+	@RequestMapping("/updatequestion.htm")
+	public ModelAndView updateQuestion(HttpServletRequest req, HttpServletResponse res) {
+		System.out.println("in survey list");
+		JSONObject obj = new JSONObject();
+		Gson gson = new Gson();
+		String questionId = "505";
+		QuestionVO q = null;
+		ModelAndView model = new ModelAndView("surveycreate");
+		try {
+			obj.put("questionId", "505");
+			obj.put("surveyId", "56");
+			obj.put("questionTypeId", "111");
+			obj.put("question", "how are you?");
+			obj.put("createdDate", "08/05/2015");
+			obj.put("updatedDate", "08/10/2015");
+			q = gson.fromJson(obj.toString(), QuestionVO.class);
+			QuestionVO s1 = questionAservice.updateQuestion(q, questionId);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+		model.addObject("question", q.getQuestion());
+		return model;
+	}
+
+	@RequestMapping("/deletequestion.htm")
+	public ModelAndView deleteQuestion(HttpServletRequest req, HttpServletResponse res) {
+		String questionId = "505";
+
+		ModelAndView model = new ModelAndView("surveycreate");
+		try {
+			int s1 = questionAservice.deleteQuestion(questionId);
+			System.out.println(" Out of Exception, coming back from ADD @@@@@@@@@@@@@@@@@@@ in update");
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+		return model;
+	}
+
+	@RequestMapping("/questionlist.htm")
+	public ModelAndView questionList(HttpServletRequest req, HttpServletResponse res) {
+		System.out.println("in survey list");
+		ModelAndView model = new ModelAndView("surveylist");
+		JSONArray list = null;
+		String surveyId = "arg1";
+		try {
+
+			list = questionAservice.getQuestionList(surveyId);
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+		model.addObject("survey", list);
+		return model;
+	}
+
+	@RequestMapping("/addanswer.htm")
+	public ModelAndView addanswer(HttpServletRequest req, HttpServletResponse res) {
+		JSONObject obj = new JSONObject();
+		Gson gson = new Gson();
+		String questionId = "222";
+		AnswerVO ansVO = null;
+		ModelAndView model = new ModelAndView("surveycreate");
+		try {
+			obj.put("answerId", "693");
+			obj.put("questionId", "222");
+			obj.put("answer", "am fine");
+			obj.put("weightage", "**");
+			ansVO = gson.fromJson(obj.toString(), AnswerVO.class);
+			AnswerVO s1 = questionAservice.addAnswer(ansVO, questionId);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+		model.addObject("question", ansVO.getAnswer());
+		return model;
+	}
+
+	@RequestMapping("/updateanswer.htm")
+	public ModelAndView updateAnswer(HttpServletRequest req, HttpServletResponse res) {
+		System.out.println("in survey list");
+		JSONObject obj = new JSONObject();
+		Gson gson = new Gson();
+		String answerId = "555";
+		AnswerVO ansVO = null;
+		ModelAndView model = new ModelAndView("surveycreate");
+		try {
+			obj.put("answerId", "666");
+			obj.put("questionId", "222");
+			obj.put("answer", "am not fine");
+			obj.put("weightage", "**");
+			ansVO = gson.fromJson(obj.toString(), AnswerVO.class);
+			AnswerVO s1 = questionAservice.updateAnswer(ansVO, answerId);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+		model.addObject("question", ansVO.getAnswer());
+		return model;
+	}
+
+	@RequestMapping("/deleteanswer.htm")
+	public ModelAndView deleteAnswer(HttpServletRequest req, HttpServletResponse res) {
+		String answerId = "666";
+
+		ModelAndView model = new ModelAndView("surveycreate");
+		try {
+			int s1 = questionAservice.deleteAnswer(answerId);
+			System.out.println(" Out of Exception, coming back from ADD @@@@@@@@@@@@@@@@@@@ in update");
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+		return model;
+	}
+
+	@RequestMapping("/answerlist.htm")
+	public ModelAndView answerList(HttpServletRequest req, HttpServletResponse res) {
+		System.out.println("in survey list");
+		ModelAndView model = new ModelAndView("surveylist");
+		JSONArray list = null;
+		// TODO send userId to get list of survey
+		String questionId = "222";
+		try {
+
+			list = questionAservice.getAnswerList(questionId);
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+		model.addObject("survey", list);
+		return model;
+	}
+
+	@RequestMapping("/questiontype.htm")
+	public ModelAndView questionTypeList(HttpServletRequest req, HttpServletResponse res) {
+		System.out.println("in survey list");
+		ModelAndView model = new ModelAndView("surveylist");
+		JSONArray list = null;
+		Gson gson = new Gson();
+		JSONObject obj = new JSONObject();
+		QuestionTypeVO q = null;
+		// TODO send userId to get list of survey
+		String questionTypeId = "2";
+		String questionTypeName = "question with qnswer";
+		try {
+			obj.put("questionTypeId", questionTypeId);
+			obj.put("name", questionTypeName);
+			obj.put("desc", "question with answer");
+			q = gson.fromJson(obj.toString(), QuestionTypeVO.class);
+			QuestionTypeVO s1 = questionAservice.addQuestionType(q);
+			list = questionAservice.getQuestionTypeList();
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+		model.addObject("survey", list);
+		return model;
+	}
+}
